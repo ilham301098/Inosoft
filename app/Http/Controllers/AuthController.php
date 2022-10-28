@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Services\AuthService;
 use App\Services\ResponseService;
-use Exception;
 use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
 
 use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     private $authService;
+    
     public function __construct()
     {
         $this->authService = new AuthService();

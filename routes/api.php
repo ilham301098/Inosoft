@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VehicleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,6 @@ use App\Http\Controllers\AuthController;
 
 
 Route::post('login', [AuthController::class, 'login']);
-// user baru
-
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -35,17 +34,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
             Route::post('logoutall', [AuthController::class, 'logoutall']);
         });
 
+        Route::group(['prefix' => 'vehicle'], function () {
+            Route::get('listVehicle', [VehicleController::class, 'listVehicle']);
+            Route::post('addVehicle', [VehicleController::class, 'addVehicle']);
+            Route::put('editVehicle', [VehicleController::class, 'editVehicle']);
+            Route::post('buyVehicle', [VehicleController::class, 'buyVehicle']);
+            Route::post('sellVehicle', [VehicleController::class, 'sellVehicle']);
+            Route::delete('deleteVehicle', [VehicleController::class, 'deleteVehicle']);
+        });
+
     });
 });
-
-
-//without auth sanctum
-Route::group(['prefix' => 'v1'], function () {
-
-    Route::group(['prefix' => 'auth'], function () {
-        Route::post('login', [AuthController::class, 'login']);
-        Route::post('login-sms', [AuthController::class, 'loginSMS']);
-    });
-
-});
-
