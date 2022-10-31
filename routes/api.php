@@ -35,12 +35,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         });
 
         Route::group(['prefix' => 'vehicle'], function () {
-            Route::get('listVehicle', [VehicleController::class, 'listVehicle']);
-            Route::post('addVehicle', [VehicleController::class, 'addVehicle']);
-            Route::put('editVehicle', [VehicleController::class, 'editVehicle']);
-            Route::post('buyVehicle', [VehicleController::class, 'buyVehicle']);
-            Route::post('sellVehicle', [VehicleController::class, 'sellVehicle']);
-            Route::delete('deleteVehicle', [VehicleController::class, 'deleteVehicle']);
+            Route::get('list', [VehicleController::class, 'listVehicle']);
+            Route::post('add', [VehicleController::class, 'addVehicle']);
+            Route::put('edit/{id}', [VehicleController::class, 'editVehicle']);
+            Route::post('sell/{id}', [VehicleController::class, 'sellVehicle']);
+            Route::delete('delete/{id}', [VehicleController::class, 'deleteVehicle']);
         });
 
     });

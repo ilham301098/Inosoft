@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,8 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $collection = 'users';
+
     protected $fillable = [
         'title',
         'profile_picture',
@@ -30,16 +33,12 @@ class User extends Authenticatable
         'email',
         'phone',
         'status',
-        'gender',
         'address',
-        'birthdate',
         'role',
-        'city',
         'password',
         'last_online_at',
         'verify_token',
         'email_verified_at',
-        'phone_verified_at',
         'deleted_at'
     ];
 
@@ -67,15 +66,6 @@ class User extends Authenticatable
         'password' => 'required'
     ];
 
-    public $rulesRegister = [
-        'first_name' => 'required',
-        'last_name' => 'required',
-        'email' => 'required|email',
-        'password' => 'min:6|required',
-        'phone' => 'required',
-        'gender' => 'required',
-    ];
-
     public $rulesAddUser = [
         'first_name' => 'required',
         'last_name' => 'required',
@@ -83,30 +73,6 @@ class User extends Authenticatable
         'phone' => 'required',
         'role' => 'required',
     ];
-
-    public function payloadAddUser($request)
-    {
-        $payload = $request->all();
-        $payload['password'] = Hash::make($request->password);
-        $payload['role'] = $request->role;
-        $payload['gender'] = strtolower($request->gender);
-        $payload['verify_token'] = Str::random(32);
-        $payload['language'] = 'id';
-        return $payload;
-    }
-
-    public function payloadRegister($request)
-    {
-        $payload = $request->all();
-        $payload['password'] = Hash::make($request->password);
-        $payload['role'] = 'member';
-        $payload['gender'] = strtolower($request->gender);
-        $payload['verify_token'] = Str::random(32);
-        $payload['referral_code'] = substr(strtolower($request->first_name . $request->last_name), 0, 6) . rand(100, 999);
-        $payload['language'] = 'id';
-
-        return $payload;
-    }
 
     public $ruleUpdatePassword = [
         'password_lama' => 'required',
@@ -126,12 +92,6 @@ class User extends Authenticatable
         'phone' => 'required',
     ];
 
-    public function payloadUpdateProfile($request)
-    {
-        $payload = $request->all();
-        $payload['birthdate'] = date('Y-m-d', strtotime($request->birthdate));
-        return $payload;
-    }
 
     public function payloadUpdateProfileDashboard($request)
     {
@@ -149,9 +109,5 @@ class User extends Authenticatable
         ];
     }
 
-    public function roleUser(): HasOne
-    {
-        return $this->hasOne(RoleUser::class, 'user_id');
-    }
 
 }

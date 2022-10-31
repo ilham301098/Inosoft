@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserSimpleResource;
 use App\Models\User;
+use App\Models\Vehicle;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -22,8 +23,13 @@ class VehicleService{
 
     public function listVehicle($request){
         try {
+
+            $data= Vehicle::where('status','!=','sold')->get();
             
-            $response = ResponseService::toArray(true, 'Data berhasil diupdate');
+            $response = [
+                'success'=>true,
+                'data'=>$data
+            ];
             return ResponseService::toJson($response);
         } catch (\Exception $e) {
             $response = ResponseService::toArray(false, $e->getMessage());
@@ -34,7 +40,12 @@ class VehicleService{
     public function addVehicle($request){
         try {
             
-            $response = ResponseService::toArray(true, 'Data berhasil diupdate');
+            $data= Vehicle::insert($request->all());
+            
+            $response = [
+                'success'=>true,
+                'data'=>$data
+            ];
             return ResponseService::toJson($response);
         } catch (\Exception $e) {
             $response = ResponseService::toArray(false, $e->getMessage());
@@ -43,10 +54,15 @@ class VehicleService{
     }
 
 
-    public function editVehicle($request){
+    public function editVehicle($request,$id){
         try {
             
-            $response = ResponseService::toArray(true, 'Data berhasil diupdate');
+            $data= Vehicle::where('id',$id)->update($request->all());
+            
+            $response = [
+                'success'=>true,
+                'data'=>$data
+            ];
             return ResponseService::toJson($response);
         } catch (\Exception $e) {
             $response = ResponseService::toArray(false, $e->getMessage());
@@ -55,10 +71,14 @@ class VehicleService{
     }
 
 
-    public function buyVehicle($request){
+    public function sellVehicle($request,$id){
         try {
+            $data= Vehicle::where('id',$id)->update($request->all());
             
-            $response = ResponseService::toArray(true, 'Data berhasil diupdate');
+            $response = [
+                'success'=>true,
+                'data'=>$data
+            ];
             return ResponseService::toJson($response);
         } catch (\Exception $e) {
             $response = ResponseService::toArray(false, $e->getMessage());
@@ -66,22 +86,15 @@ class VehicleService{
         }
     }
 
-
-    public function sellVehicle($request){
+    public function deleteVehicle($request,$id){
         try {
             
-            $response = ResponseService::toArray(true, 'Data berhasil diupdate');
-            return ResponseService::toJson($response);
-        } catch (\Exception $e) {
-            $response = ResponseService::toArray(false, $e->getMessage());
-            return ResponseService::toJson($response);
-        }
-    }
-
-    public function deleteVehicle($request){
-        try {
+            $data= Vehicle::where('id',$id)->delete();
             
-            $response = ResponseService::toArray(true, 'Data berhasil diupdate');
+            $response = [
+                'success'=>true,
+                'data'=>$data
+            ];
             return ResponseService::toJson($response);
         } catch (\Exception $e) {
             $response = ResponseService::toArray(false, $e->getMessage());

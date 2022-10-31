@@ -1,6 +1,19 @@
 # Inosoft
  Sistem Informasi Penjualan Kendaraan - Project For Recruitment By Muh. Ilham Akbar
 
+Requirement
+1. XAMPP / Webserver
+2. Composer
+3. PHP
+4. MongoDB
+
+Langkah Installasi
+1. Clone Repo ini
+2. Jalankan "composer install"
+3. Buat file .env sesuai dengan .env.example
+4. Buat database MongoDB sesuai dengan yang di isikan pada env
+5. Jalankan command php artisan serve
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">

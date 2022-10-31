@@ -27,20 +27,16 @@ class VehicleController extends Controller {
         return $this->vehicleService->addVehicle($request);
     }
 
-    public function editVehicle(Request $request){
-        return $this->vehicleService->editVehicle($request);
+    public function editVehicle(Request $request,$id){
+        return $this->vehicleService->editVehicle($request,$id);
     }
 
-    public function buyVehicle(Request $request){
-        return $this->vehicleService->buyVehicle($request);
+    public function sellVehicle(Request $request,$id){
+        return $this->vehicleService->sellVehicle($request,$id);
     }
 
-    public function sellVehicle(Request $request){
-        return $this->vehicleService->sellVehicle($request);
-    }
-
-    public function deleteVehicle(Request $request){
-        return $this->vehicleService->deleteVehicle($request);
+    public function deleteVehicle(Request $request,$id){
+        return $this->vehicleService->deleteVehicle($request,$id);
     }
 
 }
